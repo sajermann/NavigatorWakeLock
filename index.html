@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+
+  <script>
+    let wakeLock = null;
+
+    const requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+        wakeLock.addEventListener('release', () => {
+          console.log('Liberado')
+        })
+      } catch (err) {
+        console.log({ err })
+      }
+    }
+
+    window.addEventListener('load', requestWakeLock)
+    document.addEventListener('visibilitychange', () => {
+      console.log('visibilitychange');
+      if (document.hidden) {
+        console.log('Invisivel')
+      } else {
+        console.log('Visivel')
+        window.location.reload();
+      }
+    })
+  </script>
+</head>
+
+<body>
+  Test
+</body>
+
+</html>
